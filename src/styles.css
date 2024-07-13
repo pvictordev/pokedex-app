@@ -29,3 +29,7 @@
     scrollbar-width: thin;
     scrollbar-color: #ff3f3f #f0f0f0;
 }
+
+.max-h {
+    max-height: 75%;
+}
