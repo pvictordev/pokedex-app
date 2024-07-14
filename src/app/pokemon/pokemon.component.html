@@ -16,9 +16,11 @@
 
             <div class="bottom flex flex-col gap-10 p-4">
                 <div class="type grid grid-cols-2 gap-10">
-                    @for (type of pokemon.types; track type) {
-                        <span class="bg-gray-400 p-3 rounded-3xl font-medium text-center">{{ type.type.name }}</span>
-                    }
+                    @if(pokemon.types.length > 1) {
+                        @for (type of pokemon.types; track type) {
+                            <span class="bg-gray-400 p-3 rounded-3xl font-medium text-center">{{ type.type.name }}</span>
+                        }
+                    } @else {<span class="bg-gray-400 p-3 rounded-3xl font-medium text-center">{{ pokemon.types[0].type.name }}</span>}
                 </div>
                 
 

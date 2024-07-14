@@ -37,4 +37,9 @@ export class TypesComponent implements OnInit {
     } else { this.filteredTypes = this.types } 
   }
 
+  extractId(url: string): string {
+    const segments = url.split('/');
+    return segments[segments.length - 2];
+  }
+
 }

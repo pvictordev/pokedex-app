@@ -34,11 +34,13 @@ export class PokemonComponent implements OnInit {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     this.httpClient.get(url).subscribe((data: any) => {
       this.pokemon = data;
+      console.log(this.pokemon)
     });
   }
 
   // methods to get evolution chain of the particular pokemon
 
+  // get species, because species contains evolution chain 
   getPokemonSpecies(id: string): void {
     const url = `https://pokeapi.co/api/v2/pokemon-species/${id}`; 
     this.httpClient.get(url).subscribe((data: any) => {
