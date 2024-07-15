@@ -6,7 +6,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="none">
             <path d="M15 7L10 12L15 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <h1 class="text-2xl font-bold">{{typesName.name}}</h1>
+            <h1 class="text-2xl font-bold">{{typesName.name | titlecase}}</h1>
            </a>
 
            <div class="search pb-10">
@@ -22,7 +22,7 @@
                 <a href="pokemon/{{extractId(typesDetail.pokemon.url)}}" class="border flex flex-col justify-center items-center relative py-3 px-4 pb-5 text-xl rounded-3xl bg-slate-100">
                     <span class="absolute top-3 right-3 bg-gray-400 p-2 font-bold rounded-3xl">#{{extractId(typesDetail.pokemon.url)}}</span>
                     <img class="h-32 w-32 mt-10" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{extractId(typesDetail.pokemon.url)}}.png" alt="">
-                    <h2 class="text-black font-medium mt-4">{{ typesDetail.pokemon.name }}</h2>
+                    <h2 class="text-black font-medium mt-4">{{ typesDetail.pokemon.name | titlecase }}</h2>
                 </a>   
             }
       

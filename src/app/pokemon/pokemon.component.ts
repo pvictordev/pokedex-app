@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './pokemon.component.html',
   styleUrl: './pokemon.component.css'
 })
@@ -34,7 +35,6 @@ export class PokemonComponent implements OnInit {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     this.httpClient.get(url).subscribe((data: any) => {
       this.pokemon = data;
-      console.log(this.pokemon)
     });
   }
 
@@ -51,7 +51,6 @@ export class PokemonComponent implements OnInit {
   getEvolutionChain(url: string): void {
     this.httpClient.get(url).subscribe((data: any) => {
       this.evolutionChain = data.chain;
-      console.log(this.evolutionChain);
     });
   }
 
