@@ -1,12 +1,12 @@
-<div class="main h-screen bg-slate-100 w-full flex items-center justify-center">
+<div class="main h-screen  w-full flex items-center justify-center">
     <div class="container max-w-screen-sm overflow-auto">
         <div class="h-screen bg-slate-100 text-white">
-            <div class="top rounded-b-3xl pb-10 flex flex-col bg-gray-300">
+            <div class="top rounded-b-3xl pb-10 flex flex-col bg-slate-300">
                 <span onclick="history.back()" class="back cursor-pointer flex items-center gap-2 py-5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="none">
                     <path d="M15 7L10 12L15 17" stroke="#ffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <h1 class="text-2xl font-bold">{{pokemon.name | titlecase }}</h1>
+                    <h1 class="text-2xl font-semibold">{{pokemon.name | titlecase }}</h1>
                 </span>
         
                    <div class="flex justify-center">
@@ -14,7 +14,7 @@
                    </div>
             </div>
 
-            <div class="bottom flex flex-col gap-10 p-4">
+            <div class="bottom flex flex-col gap-10 p-4 bg-slate-100">
                 <div class="type grid grid-cols-2 gap-10">
                     @if(pokemon.types.length > 1) {
                         @for (type of pokemon.types; track type) {
@@ -25,15 +25,15 @@
                 
 
                 <div class="general grid grid-cols-3 gap-10">
-                    <div class="p-3 flex flex-col border-r border-gray-400 font-medium text-center">
+                    <div class="p-3 flex flex-col border-b border-gray-400 font-medium text-center">
                         <h3 class="text-xl font-medium text-gray-400">{{pokemon.types[0].type.name | titlecase }}</h3>
                         <span class="text-slate-400 text-sm">Species</span>
                     </div>
-                    <div class="p-3 flex flex-col border-r border-gray-400  font-medium text-center">
+                    <div class="p-3 flex flex-col border-b border-gray-400  font-medium text-center">
                         <h3 class="text-xl font-medium text-gray-400">{{pokemon.height / 10 }}m</h3>
                         <span  class="text-slate-400 text-sm">Height</span>
                     </div>
-                    <div class="p-3 flex flex-col border-gray-400  font-medium text-center">
+                    <div class="p-3 flex flex-col border-gray-400 border-b  font-medium text-center">
                         <h3 class="text-xl font-medium text-gray-400">{{pokemon.weight / 10}}kg</h3>
                         <span  class="text-slate-400 text-sm">Weight</span>
                     </div>
@@ -52,7 +52,7 @@
                     <div class="evolution-name grid grid-cols-3 gap-10">
 
                         @for (evolution of getEvolutions(evolutionChain); track $index) {
-                            <div class="p-3 flex flex-col border-r border-gray-400 font-medium text-center">
+                            <div class="p-3 flex flex-col border-b border-gray-400 font-medium text-center">
                                 <h3 class="text-xl font-medium text-gray-400">{{ evolution.name | titlecase}}</h3>
                                 <span class="text-slate-400 text-sm">#{{extractId(evolution.url)}}</span>
                             </div>

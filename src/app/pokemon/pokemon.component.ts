@@ -13,12 +13,12 @@ import { CommonModule } from '@angular/common';
 export class PokemonComponent implements OnInit {
 
   pokemon: any;
-  evolutionChain: any; 
+  evolutionChain: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private httpClient: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -28,31 +28,30 @@ export class PokemonComponent implements OnInit {
       this.getPokemonSpecies(id)
       this.getEvolutions(this.evolutionChain);
     }
-
-  }
+  };
 
   getPokemon(id: string): void {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     this.httpClient.get(url).subscribe((data: any) => {
       this.pokemon = data;
     });
-  }
+  };
 
   // methods to get evolution chain of the particular pokemon
 
   // get species, because species contains evolution chain 
   getPokemonSpecies(id: string): void {
-    const url = `https://pokeapi.co/api/v2/pokemon-species/${id}`; 
+    const url = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
     this.httpClient.get(url).subscribe((data: any) => {
       this.getEvolutionChain(data.evolution_chain.url);
     });
-  }
+  };
 
   getEvolutionChain(url: string): void {
     this.httpClient.get(url).subscribe((data: any) => {
       this.evolutionChain = data.chain;
     });
-  }
+  };
 
   getEvolutions(chain: any): any[] {
     let evolutions = [];
@@ -61,13 +60,13 @@ export class PokemonComponent implements OnInit {
     while (currentChain) {
       evolutions.push({ name: currentChain.species.name, url: currentChain.species.url });
       currentChain = currentChain.evolves_to[0];
-    }
+    };
     return evolutions;
-  }
+  };
 
   extractId(url: string): string {
     const segments = url.split('/');
     return segments[segments.length - 2];
-  }
-  
-}
+  };
+
+};

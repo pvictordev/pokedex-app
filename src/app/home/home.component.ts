@@ -17,14 +17,14 @@ export class HomeComponent implements OnInit {
   allPokemons: any[] = [];
   filteredPokemons: any[] = [];
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.loadAllPokemons();
   }
 
   loadAllPokemons(): void {
-    const url = 'https://pokeapi.co/api/v2/pokemon?limit=1000'; 
+    const url = 'https://pokeapi.co/api/v2/pokemon?limit=1000';
     this.httpClient.get(url).subscribe((response: any) => {
       this.allPokemons = response.results;
       this.filteredPokemons = this.allPokemons;

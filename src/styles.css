@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+html {
+    font-family: "Inter", sans-serif;   
+    color: #F1F5F9;
+}
+
 /* Scrollbar for webkit-based browsers */
 ::-webkit-scrollbar {
     width: 12px;
@@ -11,12 +17,12 @@
 
 ::-webkit-scrollbar-track {
     background: #f0f0f0;
-    border-radius: 10px;
+    border-radius: 50%;
 }
 
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #ff3f3f, #ff3f3f);
-    border-radius: 10px;
+    border-radius:  50%;
 }
 
 ::-webkit-scrollbar-thumb:hover {

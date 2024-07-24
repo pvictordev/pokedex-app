@@ -13,12 +13,12 @@ import { FormsModule } from '@angular/forms';
 export class TypesComponent implements OnInit {
   httpClient = inject(HttpClient);
 
-  searchItem: string = ''; 
+  searchItem: string = '';
   types: any[] = [];
   filteredTypes: any[] = [];
-  
+
   ngOnInit(): void {
-    this.getTypes()
+    this.getTypes();
   }
 
   getTypes(): void {
@@ -27,14 +27,14 @@ export class TypesComponent implements OnInit {
       this.filteredTypes = this.types;
     })
   }
-  
-  onSearch():void {
+
+  onSearch(): void {
     const searchItemLower = this.searchItem.toLowerCase().trim();
-    if(searchItemLower) {
+    if (searchItemLower) {
       this.filteredTypes = this.types.filter(type =>
         type.name.toLowerCase().startsWith(searchItemLower)
       );
-    } else { this.filteredTypes = this.types } 
+    } else { this.filteredTypes = this.types }
   }
 
   extractId(url: string): string {
