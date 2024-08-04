@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { HelpersService } from '../services/helpers.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-types-details',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './types-details.component.html',
   styleUrl: './types-details.component.css'
 })
@@ -16,11 +18,13 @@ export class TypesDetailsComponent {
   searchItem: string = '';
   typesDetails: any;
   filteredTypesDetails: any[] = [];
-  typesName: any;
+  typesName: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private helpersService: HelpersService
+
   ) { }
 
   ngOnInit(): void {
@@ -49,7 +53,7 @@ export class TypesDetailsComponent {
         const index = id - 1;
 
         if (index >= 0 && index < data.results.length) {
-          this.typesName = data.results[index];
+          this.typesName = data.results[index].name;
         }
       },
       error: (err) => {
@@ -67,9 +71,8 @@ export class TypesDetailsComponent {
     } else { this.filteredTypesDetails = this.typesDetails }
   }
 
-  extractId(url: string): string {
-    const segments = url.split('/');
-    return segments[segments.length - 2];
+  fetchExtractId(url: string): string {
+    return this.helpersService.extractId(url);
   }
 
 }

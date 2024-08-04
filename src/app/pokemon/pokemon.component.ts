@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
+import { RouterModule } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, NgOptimizedImage],
   templateUrl: './pokemon.component.html',
   styleUrl: './pokemon.component.css'
 })
@@ -19,12 +20,10 @@ export class PokemonComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiService,
-    private httpClient: HttpClient
   ) { }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-
     if (id) {
       this.loadPokemon(id);
       this.loadPokemonSpecies(id)
@@ -35,7 +34,7 @@ export class PokemonComponent implements OnInit {
   loadPokemon(id: string): void {
     this.apiService.getPokemon(id).subscribe({
       next: (data) => {
-        this.pokemon = data
+        this.pokemon = data;
       },
       error: (err) => {
         console.log(err);
@@ -61,6 +60,10 @@ export class PokemonComponent implements OnInit {
       }
     })
   };
+
+  getTypeId(): void {
+
+  }
 
   getEvolutions(chain: any): any[] {
     let evolutions = [];

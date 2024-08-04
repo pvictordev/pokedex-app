@@ -1,18 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { HelpersService } from '../services/helpers.service';
+import { RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-types',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './types.component.html',
   styleUrl: './types.component.css'
 })
 export class TypesComponent implements OnInit {
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private helpersService: HelpersService) { }
 
   searchItem: string = '';
   types: any[] = [];
@@ -43,9 +46,8 @@ export class TypesComponent implements OnInit {
     } else { this.filteredTypes = this.types }
   }
 
-  extractId(url: string): string {
-    const segments = url.split('/');
-    return segments[segments.length - 2];
+  fetchExtractId(url: string): string {
+    return this.helpersService.extractId(url);
   }
 
 }

@@ -19,7 +19,7 @@
 
             <div class="cards  max-h grid grid-cols-2 gap-4 overflow-y-auto">
                 @for (type of filteredTypes; track $index) {
-                    <a href="types/{{extractId(type.url)}}" class="border text-stone-100 py-3 px-4 text-xl rounded-3xl bg-slate-400">
+                    <a [routerLink]="[fetchExtractId(type.url)]" class="border text-stone-100 py-3 px-4 text-xl rounded-3xl bg-slate-400">
                         {{ type.name | titlecase }}
                     </a>
                 }

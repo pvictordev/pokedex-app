@@ -1,130 +1,136 @@
 <div class="main h-screen  w-full flex items-center justify-center">
     <div class="container max-w-screen-sm overflow-auto">
-        <div class="h-screen bg-slate-100 text-white">
-            <div class="top rounded-b-3xl pb-10 flex flex-col bg-slate-300">
-                <span onclick="history.back()" class="back cursor-pointer flex items-center gap-2 py-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="none">
-                    <path d="M15 7L10 12L15 17" stroke="#ffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <h1 class="text-2xl font-semibold">{{pokemon.name | titlecase }}</h1>
-                </span>
-        
-                   <div class="flex justify-center">
-                        <img class="h-60 w-60" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{pokemon.id}}.png" alt="">
-                   </div>
-            </div>
-
-            <div class="bottom flex flex-col gap-10 p-4 bg-slate-100">
-                <div class="type grid grid-cols-2 gap-10">
-                    @if(pokemon.types.length > 1) {
-                        @for (type of pokemon.types; track type) {
-                            <span class="bg-gray-400 p-3 rounded-3xl font-medium text-center">{{ type.type.name | titlecase }}</span>
-                        }
-                    } @else {<span class="bg-gray-400 p-3 rounded-3xl font-medium text-center">{{ pokemon.types[0].type.name | titlecase }}</span>}
-                </div>
-                
-
-                <div class="general grid grid-cols-3 gap-10">
-                    <div class="p-3 flex flex-col border-b border-gray-400 font-medium text-center">
-                        <h3 class="text-xl font-medium text-gray-400">{{pokemon.types[0].type.name | titlecase }}</h3>
-                        <span class="text-slate-400 text-sm">Species</span>
-                    </div>
-                    <div class="p-3 flex flex-col border-b border-gray-400  font-medium text-center">
-                        <h3 class="text-xl font-medium text-gray-400">{{pokemon.height / 10 }}m</h3>
-                        <span  class="text-slate-400 text-sm">Height</span>
-                    </div>
-                    <div class="p-3 flex flex-col border-gray-400 border-b  font-medium text-center">
-                        <h3 class="text-xl font-medium text-gray-400">{{pokemon.weight / 10}}kg</h3>
-                        <span  class="text-slate-400 text-sm">Weight</span>
+        @if(pokemon) {
+            <div class="h-screen bg-slate-100 text-white">
+                <div class="top rounded-b-3xl pb-10 flex flex-col bg-slate-300">
+                    <span onclick="history.back()" class="back cursor-pointer flex items-center gap-2 py-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 7L10 12L15 17" stroke="#ffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h1 class="text-2xl font-semibold">
+                            {{ pokemon.name | titlecase }}
+                        </h1>
+                    </span>
+            
+                    <div class="flex justify-center">
+                            <img class="h-60 w-60" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{ pokemon.id }}.png" alt="{{pokemon.name}}">
                     </div>
                 </div>
 
-                <div class="evolution flex flex-col">
-                    <div class="evolution-forms grid grid-cols-3 gap-10">
-                        
-                        @for (evolution of getEvolutions(evolutionChain); track $index) {
-                            <a href="/pokemon/{{extractId(evolution.url)}}" class="flex justify-center items-center">
-                                <img class="h-24 w-24" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{extractId(evolution.url)}}.png" alt="">
-                            </a>
+                <div class="bottom flex flex-col gap-10 p-4 bg-slate-100">
+                    <div class="type grid grid-cols-2 gap-10">
+                        @if(pokemon.types.length > 1) {
+                            @for (type of pokemon.types; track type) {
+                                <span class="bg-gray-400 p-3 rounded-3xl font-medium text-center">{{ type.type.name | titlecase }}</span>
+                            }
+                        } @else {
+                            <span class="bg-gray-400 p-3 rounded-3xl font-medium text-center">{{ pokemon.types[0].type.name | titlecase }}</span>
                         }
-
                     </div>
-                    <div class="evolution-name grid grid-cols-3 gap-10">
+                    
 
-                        @for (evolution of getEvolutions(evolutionChain); track $index) {
-                            <div class="p-3 flex flex-col border-b border-gray-400 font-medium text-center">
-                                <h3 class="text-xl font-medium text-gray-400">{{ evolution.name | titlecase}}</h3>
-                                <span class="text-slate-400 text-sm">#{{extractId(evolution.url)}}</span>
+                    <div class="general grid grid-cols-3 gap-10">
+                        <div class="p-3 flex flex-col border-b border-gray-400 font-medium text-center">
+                            <h3 class="text-xl font-medium text-gray-400">{{pokemon.types[0].type.name | titlecase }}</h3>
+                            <span class="text-slate-400 text-sm">Species</span>
+                        </div>
+                        <div class="p-3 flex flex-col border-b border-gray-400  font-medium text-center">
+                            <h3 class="text-xl font-medium text-gray-400">{{pokemon.height / 10 }}m</h3>
+                            <span  class="text-slate-400 text-sm">Height</span>
+                        </div>
+                        <div class="p-3 flex flex-col border-gray-400 border-b  font-medium text-center">
+                            <h3 class="text-xl font-medium text-gray-400">{{pokemon.weight / 10}}kg</h3>
+                            <span  class="text-slate-400 text-sm">Weight</span>
+                        </div>
+                    </div>
+
+                    <div class="evolution flex flex-col">
+                        <div class="evolution-forms grid grid-cols-3 gap-10">
+                            
+                            @for (evolution of getEvolutions(evolutionChain); track $index) {
+                                <a href="/pokemon/{{extractId(evolution.url)}}" class="flex justify-center items-center">
+                                    <img class="h-24 w-24" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{extractId(evolution.url)}}.png" alt="">
+                                </a>
+                            }
+
+                        </div>
+                        <div class="evolution-name grid grid-cols-3 gap-10">
+
+                            @for (evolution of getEvolutions(evolutionChain); track $index) {
+                                <div class="p-3 flex flex-col border-b border-gray-400 font-medium text-center">
+                                    <h3 class="text-xl font-medium text-gray-400">{{ evolution.name | titlecase}}</h3>
+                                    <span class="text-slate-400 text-sm">#{{extractId(evolution.url)}}</span>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="stats">
+                        <div class="mt-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-700">Attack</span>
+                                <span class="text-sm font-medium text-gray-700">{{pokemon.stats[1].base_stat}}</span>
                             </div>
-                        }
-
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-red-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[1].base_stat / 2"></div>
+                            </div>
+                        </div>
+        
+                        <div class="mt-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-700">Defense</span>
+                                <span class="text-sm font-medium text-gray-700">{{pokemon.stats[2].base_stat}}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[2].base_stat / 2"></div>
+                            </div>
+                        </div>
+        
+                        <div class="mt-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-700">Speed</span>
+                                <span class="text-sm font-medium text-gray-700">{{pokemon.stats[5].base_stat}}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[5].base_stat / 2"></div>
+                            </div>
+                        </div>
+        
+                        <div class="mt-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-700">HP</span>
+                                <span class="text-sm font-medium text-gray-700">{{pokemon.stats[0].base_stat}}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-gray-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[0].base_stat / 2"></div>
+                            </div>
+                        </div>
+        
+                        <div class="mt-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-700">Special Attack</span>
+                                <span class="text-sm font-medium text-gray-700">{{pokemon.stats[3].base_stat}}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-purple-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[3].base_stat / 2"></div>
+                            </div>
+                        </div>
+        
+                        <div class="mt-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-700">Special Defense</span>
+                                <span class="text-sm font-medium text-gray-700">{{pokemon.stats[4].base_stat}}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-pink-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[4].base_stat / 2"></div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
-
-                <div class="stats">
-                    <div class="mt-4">
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-700">Attack</span>
-                            <span class="text-sm font-medium text-gray-700">{{pokemon.stats[1].base_stat}}</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-red-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[1].base_stat / 2"></div>
-                        </div>
-                    </div>
-    
-                    <div class="mt-4">
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-700">Defense</span>
-                            <span class="text-sm font-medium text-gray-700">{{pokemon.stats[2].base_stat}}</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-blue-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[2].base_stat / 2"></div>
-                        </div>
-                    </div>
-    
-                    <div class="mt-4">
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-700">Speed</span>
-                            <span class="text-sm font-medium text-gray-700">{{pokemon.stats[5].base_stat}}</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-green-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[5].base_stat / 2"></div>
-                        </div>
-                    </div>
-    
-                    <div class="mt-4">
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-700">HP</span>
-                            <span class="text-sm font-medium text-gray-700">{{pokemon.stats[0].base_stat}}</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-gray-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[0].base_stat / 2"></div>
-                        </div>
-                    </div>
-    
-                    <div class="mt-4">
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-700">Special Attack</span>
-                            <span class="text-sm font-medium text-gray-700">{{pokemon.stats[3].base_stat}}</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-purple-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[3].base_stat / 2"></div>
-                        </div>
-                    </div>
-    
-                    <div class="mt-4">
-                        <div class="flex justify-between">
-                            <span class="text-sm font-medium text-gray-700">Special Defense</span>
-                            <span class="text-sm font-medium text-gray-700">{{pokemon.stats[4].base_stat}}</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-pink-500 h-2.5 rounded-full" [style.width.%]="pokemon.stats[4].base_stat / 2"></div>
-                        </div>
-                    </div>
-                </div>
-
+            
             </div>
-           
-        </div>
+        }
     </div>
 </div>
