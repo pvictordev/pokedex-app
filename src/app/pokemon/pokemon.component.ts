@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-pokemon',
@@ -17,6 +18,7 @@ export class PokemonComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private apiService: ApiService,
     private httpClient: HttpClient
   ) { }
 
@@ -24,33 +26,40 @@ export class PokemonComponent implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
-      this.getPokemon(id);
-      this.getPokemonSpecies(id)
+      this.loadPokemon(id);
+      this.loadPokemonSpecies(id)
       this.getEvolutions(this.evolutionChain);
     }
   };
 
-  getPokemon(id: string): void {
-    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    this.httpClient.get(url).subscribe((data: any) => {
-      this.pokemon = data;
-    });
+  loadPokemon(id: string): void {
+    this.apiService.getPokemon(id).subscribe({
+      next: (data) => {
+        this.pokemon = data
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   };
 
   // methods to get evolution chain of the particular pokemon
 
   // get species, because species contains evolution chain 
-  getPokemonSpecies(id: string): void {
-    const url = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
-    this.httpClient.get(url).subscribe((data: any) => {
-      this.getEvolutionChain(data.evolution_chain.url);
-    });
+  loadPokemonSpecies(id: string): void {
+    this.apiService.getPokemonSpecies(id).subscribe({
+      next: (data) => {
+        this.loadEvolutionChain(data.evolution_chain.url);
+      }
+    })
   };
 
-  getEvolutionChain(url: string): void {
-    this.httpClient.get(url).subscribe((data: any) => {
-      this.evolutionChain = data.chain;
-    });
+  loadEvolutionChain(url: string): void {
+    this.apiService.getEvolutionChain(url).subscribe({
+      next: (data) => {
+        this.evolutionChain = data.chain;
+      }
+    })
   };
 
   getEvolutions(chain: any): any[] {

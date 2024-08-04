@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-types',
@@ -11,20 +11,26 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './types.component.css'
 })
 export class TypesComponent implements OnInit {
-  httpClient = inject(HttpClient);
+
+  constructor(private apiService: ApiService) { }
 
   searchItem: string = '';
   types: any[] = [];
   filteredTypes: any[] = [];
 
   ngOnInit(): void {
-    this.getTypes();
+    this.loadAllTypes();
   }
 
-  getTypes(): void {
-    this.httpClient.get('https://pokeapi.co/api/v2/type').subscribe((data: any) => {
-      this.types = data.results;
-      this.filteredTypes = this.types;
+  loadAllTypes(): void {
+    this.apiService.getAllTypes().subscribe({
+      next: (data) => {
+        this.types = data.results;
+        this.filteredTypes = this.types
+      },
+      error: (err) => {
+        console.log(err);
+      }
     })
   }
 

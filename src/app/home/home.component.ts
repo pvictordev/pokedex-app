@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../services/api.service';
 
 
 @Component({
@@ -17,18 +17,22 @@ export class HomeComponent implements OnInit {
   allPokemons: any[] = [];
   filteredPokemons: any[] = [];
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.loadAllPokemons();
   }
 
   loadAllPokemons(): void {
-    const url = 'https://pokeapi.co/api/v2/pokemon?limit=1000';
-    this.httpClient.get(url).subscribe((response: any) => {
-      this.allPokemons = response.results;
-      this.filteredPokemons = this.allPokemons;
-    });
+    this.apiService.getAllPokemons('10000').subscribe({
+      next: (data) => {
+        this.allPokemons = data.results;
+        this.filteredPokemons = this.allPokemons
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   onSearch(): void {
